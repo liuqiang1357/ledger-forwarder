@@ -1,0 +1,22 @@
+node_modules
+/.npmignore
+/.project
+/.settings/
+/.cache
+/dist
+
+/docs/_build/
+lib/
+
+# Logs
+*.log
+
+# Coverage
+/.nyc_output
+/coverage
+
+# IDE specific
+/.vscode
+
+/.DS_Store
+src/.DS_Store
