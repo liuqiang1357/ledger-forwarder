@@ -1,19 +1,19 @@
 {
-    "name": "@ocd/ledger-forwarder",
-    "version": "1.0.0",
-    "author": "Matus Zamborsky <zamborsky@gmail.com>",
-    "license": "LGPL3",
-    "scripts": {
-      "start": "cross-env NODE_ENV=development parcel index.html --https",
-      "build": "cross-env NODE_ENV=production parcel build forwarder.html --no-minify --public-url /"
-    },
-    "dependencies": {
-      "@ledgerhq/hw-transport-u2f": "^4.15.0"
-    },
-    "devDependencies": {
-      "babel-plugin-transform-class-properties": "^6.24.1",
-      "babel-preset-react-app": "^3.1.1",
-      "cross-env": "^5.1.4",
-      "parcel-bundler": "^1.6.2"
-    }
+  "name": "@ocd/ledger-forwarder",
+  "version": "1.0.0",
+  "author": "Matus Zamborsky <zamborsky@gmail.com>",
+  "license": "LGPL3",
+  "scripts": {
+    "start": "cross-env NODE_ENV=development parcel index.html --https",
+    "build": "cross-env NODE_ENV=production parcel build forwarder.html --no-minify --public-url /"
+  },
+  "dependencies": {
+    "@ledgerhq/hw-transport-u2f": "^4.15.0"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-runtime": "^6.26.0",
+    "cross-env": "^5.1.4",
+    "parcel-bundler": "^1.6.2"
   }
+}

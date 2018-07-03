@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import TransportU2F from "@ledgerhq/hw-transport-u2f";
 
 let delegate;
@@ -10,11 +11,16 @@ async function list() {
   return await TransportU2F.list();
 }
 
-async function open(path, isDebug, scrambleKey, timeout) {
-  delegate = await TransportU2F.open(path);
-  transport.delegate.setDebugMode(isDebug);
-  transport.delegate.setScrambleKey(scrambleKey);
-  transport.delegate.setExchangeTimeout(timeout);
+async function open() {
+  const paths = await TransportU2F.list();
+  if (paths.length === 0) {
+      throw new Error('USB Error: No device found.');
+  }
+
+  delegate = await TransportU2F.open(paths[0]);
+  delegate.setDebugMode(true);
+  delegate.setScrambleKey('ONT');
+  delegate.setExchangeTimeout(5000);
 }
 
 async function close() {
@@ -67,9 +73,12 @@ class Forwarder {
         self.pagePort_.start();
         // Tell the page we are ready
         self.pagePort_.postMessage('ready');
-      }
-      else {
-        console.error('Ledger forwarder iframe received non-init message');
+      } else if (message.data === 'close') {
+        self.pageOrigin_ = null;
+        self.pagePort_.close();
+        self.pagePort_ = null;
+      } else {
+        console.error('Ledger forwarder iframe received non-init/close message');
       }
     }, false);
   }
@@ -84,15 +93,8 @@ class Forwarder {
     let result;
     if (event.data.method === 'isSupported') {
       result = await isSupported();
-    } else if (event.data.method === 'list') {
-      result = await list();
     } else if (event.data.method === 'open') {
-      result = await open(
-        event.data.path,
-        event.data.isDebug,
-        event.data.scrambleKey,
-        event.data.timeout
-      );
+      result = await open();
     } else if (event.data.method === 'close') {
       result = await close();
     } else if (event.data.method === 'send') {
