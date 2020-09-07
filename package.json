@@ -8,7 +8,7 @@
     "build": "cross-env NODE_ENV=production parcel build forwarder.html --no-minify --public-url /"
   },
   "dependencies": {
-    "@ledgerhq/hw-transport-u2f": "^4.15.0"
+    "@ledgerhq/hw-transport-u2f": "^5.22.0"
   },
   "devDependencies": {
     "babel-plugin-transform-runtime": "^6.23.0",
